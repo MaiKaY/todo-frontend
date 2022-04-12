@@ -10,7 +10,7 @@ generates:
       - typescript-react-query
     config:
       fetcher:
-        endpoint: https://staging-api.todo.maikay.de/graphql
+        endpoint: https://api.todo.maikay.de/graphql
         fetchParams:
           headers:
             Content-Type: application/json
