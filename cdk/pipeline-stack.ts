@@ -22,10 +22,10 @@ export class PipelineStack extends Stack {
             dockerEnabledForSynth: true
         });
 
-        const stagingInfrastructure = new InfrastructureStage(this, 'Production', {
+        const productionInfrastructure = new InfrastructureStage(this, 'Production', {
             environment: 'Production'
         });
-        pipeline.addStage(stagingInfrastructure);
+        pipeline.addStage(productionInfrastructure);
 
         // const stagingInfrastructure = new InfrastructureStage(this, 'Staging', {
         //     environment: 'Staging'
