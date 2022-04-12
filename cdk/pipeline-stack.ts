@@ -22,16 +22,21 @@ export class PipelineStack extends Stack {
             dockerEnabledForSynth: true
         });
 
-        const stagingInfrastructure = new InfrastructureStage(this, 'Staging', {
-            environment: 'Staging'
+        const stagingInfrastructure = new InfrastructureStage(this, 'Production', {
+            environment: 'Production'
         });
         pipeline.addStage(stagingInfrastructure);
 
-        const productionInfrastructure = new InfrastructureStage(this, 'Production', {
-            environment: 'Production'
-        });
-        pipeline.addStage(productionInfrastructure, {
-            pre: [new pipelines.ManualApprovalStep('Approve')]
-        });
+        // const stagingInfrastructure = new InfrastructureStage(this, 'Staging', {
+        //     environment: 'Staging'
+        // });
+        // pipeline.addStage(stagingInfrastructure);
+        //
+        // const productionInfrastructure = new InfrastructureStage(this, 'Production', {
+        //     environment: 'Production'
+        // });
+        // pipeline.addStage(productionInfrastructure, {
+        //     pre: [new pipelines.ManualApprovalStep('Approve')]
+        // });
     }
 }
