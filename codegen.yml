@@ -1,0 +1,16 @@
+schema: './src/graphql/schema.graphql'
+documents: './src/**/*.graphql'
+generates:
+  ./src/graphql/types.ts:
+    plugins:
+      - add:
+          content: '/* eslint-disable */'
+      - typescript
+      - typescript-operations
+      - typescript-react-query
+    config:
+      fetcher:
+        endpoint: https://staging-api.todo.maikay.de/graphql
+        fetchParams:
+          headers:
+            Content-Type: application/json

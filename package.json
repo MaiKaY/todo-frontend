@@ -1,0 +1,55 @@
+{
+    "name": "@maikay/todo-frontend",
+    "authors": [
+        {
+            "name": "Maik Schmidt",
+            "email": "maik.schmidt.hl@gmail.com"
+        }
+    ],
+    "scripts": {
+        "prepare": "npx husky install",
+        "lint:fix": "npx prettier --write --ignore-unknown . && npx eslint --cache --fix .",
+        "codegen": "graphql-codegen && npm run lint:fix",
+        "build": "vite build",
+        "preview": "vite preview",
+        "start": "vite"
+    },
+    "dependencies": {
+        "@emotion/react": "11.9.0",
+        "@emotion/styled": "11.8.1",
+        "@mui/icons-material": "5.6.0",
+        "@mui/lab": "5.0.0-alpha.76",
+        "@mui/material": "5.6.0",
+        "graphql": "16.3.0",
+        "moment": "2.29.2",
+        "notistack": "2.0.4",
+        "react": "18.0.0",
+        "react-dom": "18.0.0",
+        "react-query": "4.0.0-beta.2",
+        "react-router-dom": "6.3.0"
+    },
+    "devDependencies": {
+        "@commitlint/cli": "16.2.3",
+        "@commitlint/config-conventional": "16.2.1",
+        "@graphql-codegen/add": "3.1.1",
+        "@graphql-codegen/cli": "2.6.2",
+        "@graphql-codegen/typescript-operations": "2.3.5",
+        "@graphql-codegen/typescript-react-query": "3.5.9",
+        "@types/react": "18.0.1",
+        "@types/react-dom": "18.0.0",
+        "@typescript-eslint/eslint-plugin": "5.18.0",
+        "@typescript-eslint/parser": "5.18.0",
+        "@vitejs/plugin-react": "1.3.0",
+        "aws-cdk": "2.20.0",
+        "aws-cdk-lib": "2.20.0",
+        "constructs": "10.0.112",
+        "eslint": "8.13.0",
+        "eslint-config-prettier": "8.5.0",
+        "eslint-plugin-import": "2.26.0",
+        "husky": "7.0.4",
+        "prettier": "2.6.2",
+        "source-map-support": "0.5.21",
+        "typescript": "4.6.3",
+        "vite": "2.9.1"
+    }
+}

@@ -1,0 +1,11 @@
+query ListTodos {
+    todos {
+        id
+        description
+        isCompleted
+        timeline {
+            createdAt
+            completedAt
+        }
+    }
+}

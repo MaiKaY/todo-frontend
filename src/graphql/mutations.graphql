@@ -1,0 +1,17 @@
+mutation CreateTodo($description: String!) {
+    create(input: { description: $description }) {
+        error
+    }
+}
+
+mutation CompleteTodo($todoId: ID!) {
+    complete(input: { todoId: $todoId }) {
+        error
+    }
+}
+
+mutation DeleteTodo($todoId: ID!) {
+    delete(input: { todoId: $todoId }) {
+        error
+    }
+}
