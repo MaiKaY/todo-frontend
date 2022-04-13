@@ -1,4 +1,4 @@
-import { Add, DeleteForever } from '@mui/icons-material';
+import { Add, DeleteForever, EmojiEvents } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 import {
     Button,
@@ -13,7 +13,8 @@ import {
     ListItemIcon,
     ListItemText,
     Stack,
-    TextField
+    TextField,
+    Typography
 } from '@mui/material';
 import moment from 'moment';
 import { useSnackbar } from 'notistack';
@@ -132,36 +133,43 @@ export const Home = (): React.ReactElement => {
                     </Card>
                     <Card>
                         <CardContent>
-                            <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-                                {data?.todos.map((todo) => (
-                                    <ListItem
-                                        key={todo.id}
-                                        disablePadding
-                                        secondaryAction={
-                                            <IconButton onClick={async () => await deleteTodo(todo.id)}>
-                                                <DeleteForever />
-                                            </IconButton>
-                                        }
-                                    >
-                                        <ListItemButton onClick={() => handleCompletion(todo.id)}>
-                                            <ListItemIcon>
-                                                <Checkbox
-                                                    edge='start'
-                                                    checked={todo.isCompleted}
-                                                    tabIndex={-1}
-                                                    disableRipple
-                                                    inputProps={{ 'aria-labelledby': todo.id }}
+                            {data?.todos.length === 0 ? (
+                                <Stack direction='row' spacing={2} justifyItems='center' justifyContent='center'>
+                                    <EmojiEvents fontSize='large' color='success' />
+                                    <Typography variant='h6'>Well done, nothing open to do!</Typography>
+                                </Stack>
+                            ) : (
+                                <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+                                    {data?.todos.map((todo) => (
+                                        <ListItem
+                                            key={todo.id}
+                                            disablePadding
+                                            secondaryAction={
+                                                <IconButton onClick={async () => await deleteTodo(todo.id)}>
+                                                    <DeleteForever />
+                                                </IconButton>
+                                            }
+                                        >
+                                            <ListItemButton onClick={() => handleCompletion(todo.id)}>
+                                                <ListItemIcon>
+                                                    <Checkbox
+                                                        edge='start'
+                                                        checked={todo.isCompleted}
+                                                        tabIndex={-1}
+                                                        disableRipple
+                                                        inputProps={{ 'aria-labelledby': todo.id }}
+                                                    />
+                                                </ListItemIcon>
+                                                <ListItemText
+                                                    id={todo.id}
+                                                    primary={todo.description}
+                                                    secondary={`created ${moment(todo.timeline.createdAt).fromNow()}`}
                                                 />
-                                            </ListItemIcon>
-                                            <ListItemText
-                                                id={todo.id}
-                                                primary={todo.description}
-                                                secondary={`created ${moment(todo.timeline.createdAt).fromNow()}`}
-                                            />
-                                        </ListItemButton>
-                                    </ListItem>
-                                ))}
-                            </List>
+                                            </ListItemButton>
+                                        </ListItem>
+                                    ))}
+                                </List>
+                            )}
                         </CardContent>
                     </Card>
                 </Stack>
