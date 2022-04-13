@@ -27,7 +27,7 @@ export class InfrastructureStack extends Stack {
         const certificate = certificatemanager.Certificate.fromCertificateArn(
             this,
             'Certificate',
-            'arn:aws:acm:us-east-1:515422304400:certificate/0d21c4b3-e35f-435a-85c5-1b93920954a0'
+            'arn:aws:acm:us-east-1:515422304400:certificate/716224e7-872e-4fc0-b8db-f95a3a255e2b'
         );
 
         const bucket = new s3.Bucket(this, 'WebsiteBucket', {
