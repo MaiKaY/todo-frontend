@@ -15,3 +15,9 @@ mutation DeleteTodo($todoId: ID!) {
         error
     }
 }
+
+mutation UncompleteTodo($todoId: ID!) {
+    uncomplete(input: { todoId: $todoId }) {
+        error
+    }
+}

@@ -86,6 +86,8 @@ export type Mutation = {
     create: CreateOutput;
     /** Delete todo */
     delete: DeleteOutput;
+    /** Uncomplete todo */
+    uncomplete: UncompleteOutput;
 };
 
 export type MutationCompleteArgs = {
@@ -98,6 +100,10 @@ export type MutationCreateArgs = {
 
 export type MutationDeleteArgs = {
     input: DeleteInput;
+};
+
+export type MutationUncompleteArgs = {
+    input: UncompleteInput;
 };
 
 export type Query = {
@@ -119,6 +125,21 @@ export type Todo = {
     isCompleted: Scalars['Boolean'];
     timeline: Timeline;
 };
+
+export type UncompleteInput = {
+    todoId: Scalars['ID'];
+};
+
+export type UncompleteOutput = {
+    __typename?: 'UncompleteOutput';
+    error?: Maybe<UncompleteOutputError>;
+};
+
+export enum UncompleteOutputError {
+    Internal = 'INTERNAL',
+    TodoDoesNotExists = 'TODO_DOES_NOT_EXISTS',
+    TodoNotCompleted = 'TODO_NOT_COMPLETED'
+}
 
 export type CreateTodoMutationVariables = Exact<{
     description: Scalars['String'];
@@ -145,6 +166,15 @@ export type DeleteTodoMutationVariables = Exact<{
 export type DeleteTodoMutation = {
     __typename?: 'Mutation';
     delete: { __typename?: 'DeleteOutput'; error?: DeleteOutputError | null };
+};
+
+export type UncompleteTodoMutationVariables = Exact<{
+    todoId: Scalars['ID'];
+}>;
+
+export type UncompleteTodoMutation = {
+    __typename?: 'Mutation';
+    uncomplete: { __typename?: 'UncompleteOutput'; error?: UncompleteOutputError | null };
 };
 
 export type ListTodosQueryVariables = Exact<{ [key: string]: never }>;
@@ -206,6 +236,22 @@ export const useDeleteTodoMutation = <TError = unknown, TContext = unknown>(
         ['DeleteTodo'],
         (variables?: DeleteTodoMutationVariables) =>
             fetcher<DeleteTodoMutation, DeleteTodoMutationVariables>(DeleteTodoDocument, variables)(),
+        options
+    );
+export const UncompleteTodoDocument = `
+    mutation UncompleteTodo($todoId: ID!) {
+  uncomplete(input: {todoId: $todoId}) {
+    error
+  }
+}
+    `;
+export const useUncompleteTodoMutation = <TError = unknown, TContext = unknown>(
+    options?: UseMutationOptions<UncompleteTodoMutation, TError, UncompleteTodoMutationVariables, TContext>
+) =>
+    useMutation<UncompleteTodoMutation, TError, UncompleteTodoMutationVariables, TContext>(
+        ['UncompleteTodo'],
+        (variables?: UncompleteTodoMutationVariables) =>
+            fetcher<UncompleteTodoMutation, UncompleteTodoMutationVariables>(UncompleteTodoDocument, variables)(),
         options
     );
 export const ListTodosDocument = `

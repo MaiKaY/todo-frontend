@@ -23,7 +23,8 @@ import {
     useCompleteTodoMutation,
     useCreateTodoMutation,
     useDeleteTodoMutation,
-    useListTodosQuery
+    useListTodosQuery,
+    useUncompleteTodoMutation
 } from '../graphql/types';
 
 import { DefaultLayout } from './DefaultLayout';
@@ -35,6 +36,7 @@ export const Home = (): React.ReactElement => {
     const createTodoMutation = useCreateTodoMutation();
     const completeTodoMutation = useCompleteTodoMutation();
     const deleteTodoMutation = useDeleteTodoMutation();
+    const uncompleteTodoMutation = useUncompleteTodoMutation();
 
     const isValidDescription = () => description.length > 1;
 
@@ -55,26 +57,49 @@ export const Home = (): React.ReactElement => {
 
     const handleCompletion = async (todoId: string) => {
         const todo = data?.todos.find((todo) => todo.id === todoId);
-        if (!todo?.isCompleted) {
-            await completeTodoMutation.mutateAsync({ todoId });
-            enqueueSnackbar('Todo successfully completed', {
-                variant: 'success',
-                action: (key) => (
-                    <Button
-                        color='inherit'
-                        onClick={() => {
-                            // @todo add incomplete mutation
-                            closeSnackbar(key);
-                        }}
-                    >
-                        undo
-                    </Button>
-                )
-            });
-            await refetch();
+        if (todo?.isCompleted) {
+            await uncomplete(todoId);
         } else {
-            enqueueSnackbar('This action does not exists, yet', { variant: 'error' });
+            await complete(todoId);
         }
+    };
+
+    const complete = async (todoId: string) => {
+        await completeTodoMutation.mutateAsync({ todoId });
+        await refetch();
+        enqueueSnackbar('Todo successfully completed', {
+            variant: 'success',
+            action: (key) => (
+                <Button
+                    color='inherit'
+                    onClick={async () => {
+                        closeSnackbar(key);
+                        await uncomplete(todoId);
+                    }}
+                >
+                    undo
+                </Button>
+            )
+        });
+    };
+
+    const uncomplete = async (todoId: string) => {
+        await uncompleteTodoMutation.mutateAsync({ todoId });
+        await refetch();
+        enqueueSnackbar('Todo successfully uncompleted', {
+            variant: 'success',
+            action: (key) => (
+                <Button
+                    color='inherit'
+                    onClick={async () => {
+                        closeSnackbar(key);
+                        await complete(todoId);
+                    }}
+                >
+                    undo
+                </Button>
+            )
+        });
     };
 
     return (
